@@ -1,0 +1,25 @@
+.secrets.env
+mariadb/
+redis/
+node_modules/
+
+# bench: only our app is versioned; Frappe, ERPNext, sites and the virtualenv are not
+frappe-bench/*
+!frappe-bench/apps/
+frappe-bench/apps/*
+!frappe-bench/apps/asset_api/
+frappe-bench/apps/asset_api/**/__pycache__/
+frappe-bench/apps/asset_api/**/*.pyc
+frappe-bench/apps/asset_api/**/.frappe
+
+# build output goes to the server, not the repository
+asset-ui/dist/
+
+# Playwright scratch data (browser profiles, traces)
+.playwright-mcp/
+
+# generated knowledge graph (rebuild with `graphify update .`)
+graphify-out/
+
+# QA screenshots contain test-site data; kept locally, not published
+qa-screenshots/

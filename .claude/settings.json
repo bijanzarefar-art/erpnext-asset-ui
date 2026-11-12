@@ -1,0 +1,10 @@
+{
+  "enabledPlugins": {
+    "frappe-agent@frappe-agent": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const p=require\\('./node_modules/frappe-ui/package.json'\\);console.log\\(p.version, p.module||p.main\\)\")"
+    ]
+  }
+}

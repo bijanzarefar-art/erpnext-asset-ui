@@ -1,0 +1,18 @@
+@import '@fontsource/vazirmatn/arabic-400.css';
+@import '@fontsource/vazirmatn/arabic-600.css';
+@import '@fontsource/vazirmatn/latin-400.css';
+@import 'frappe-ui/style.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: Vazirmatn, Tahoma, 'Segoe UI', sans-serif;
+}
+
+/* Numbers, codes and emails inside RTL text must stay left-to-right */
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: right;
+}
