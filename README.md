@@ -56,8 +56,14 @@ npm run build:deploy        # خروجی dist/ با پایه /asset-ui/
 | `/opt/asset-ui/dist` | مسیر dist |
 | `127.0.0.1:8000` و `127.0.0.1:9000` | `webserver_port` و `socketio_port` در `common_site_config.json` |
 
+**جای فایل مهم است.** این فایل یک بلوک کامل برای context اصلی `http` است و `upstream` دارد.
+آن را در `/etc/nginx/conf.d/asset-ui.conf` بگذارید (nginx خودش `conf.d/*.conf` را داخل `http` می‌خواند).
+اگر آن را با `include` داخل یک `server` بگذارید، nginx با خطای
+`upstream directive is not allowed here` رد می‌کند.
+
 ```bash
 sudo cp deploy/nginx/asset-ui-security-headers.conf /etc/nginx/snippets/
+sudo cp deploy/nginx/asset-ui.conf /etc/nginx/conf.d/asset-ui.conf
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
@@ -69,6 +75,21 @@ sudo nginx -t && sudo systemctl reload nginx
 
 `bench build` برای این رابط لازم نیست. اگر bench شما خودش فایل nginx تولید می‌کند
 (`bench setup nginx`)، فقط بلوک‌های `location /asset-ui` نمونه را به آن اضافه کنید و بقیه را دست نزنید.
+
+### تست محلی nginx
+
+برای آزمودن پیکربندی روی همین ماشین، بدون گواهی TLS و بدون دست‌زدن به فایل نمونه:
+
+```bash
+brew install nginx
+nginx -t -c "$PWD/deploy/nginx/local-test-wrapper.conf"
+nginx -c "$PWD/deploy/nginx/local-test-wrapper.conf" -p "$PWD"
+# http://asset.localhost:8090/asset-ui/
+nginx -s stop -c "$PWD/deploy/nginx/local-test-wrapper.conf" -p "$PWD"
+```
+
+`local-test.conf` همان بلوک‌های نمونه را با مسیرهای واقعی و پورت 8090 دارد و
+`local-test-wrapper.conf` آن را داخل `http` می‌گذارد. این دو فقط برای تست‌اند و در استقرار استفاده نمی‌شوند.
 
 ### امنیت نشست
 

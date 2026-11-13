@@ -23,3 +23,11 @@ graphify-out/
 
 # QA screenshots contain test-site data; kept locally, not published
 qa-screenshots/
+
+# local nginx test artifacts
+deploy/nginx/*.pid
+deploy/nginx/*.log
+
+# local nginx test wrapper (generated from local-test.conf)
+deploy/nginx/local-test-wrapper.conf
+__pycache__/
