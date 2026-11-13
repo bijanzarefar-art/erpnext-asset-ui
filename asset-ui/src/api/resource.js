@@ -8,7 +8,9 @@ export function autoResource(createResource, options) {
   const resource = createResource({ ...options, auto: false })
   if (options.auto) {
     // Swallow only the promise; `error` still carries the failure to the component.
-    resource.fetch().catch(() => {})
+    // createListResource's fetch() returns nothing, so guard before calling .catch.
+    const pending = resource.fetch()
+    if (pending && typeof pending.catch === 'function') pending.catch(() => {})
   }
   return resource
 }
